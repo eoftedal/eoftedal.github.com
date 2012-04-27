@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
+<head>
 <style>
 body {
 	margin: 0;
 	padding: 0;
+	color: #444;
+}
+a {
+	text-decoration: none;
 }
 header {
   background: #337EB6;
@@ -16,18 +21,27 @@ header {
 	border-bottom: 2px solid rgb(81, 156, 212);
 	padding: 0;
 }
-h1, ul {
+h1, div.main {
 	margin: 0 auto;
 	width: 800px;
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-	padding: 20px;
+	padding: 30px 20px 20px 20px;
 
+}
+h2 {
+	margin: 0px 0px 5px 0px;
+	padding: 0px 0px 0px 60px;
+	font-size: 110%;
+	border-bottom: 1px solid #999;
 }
 
 ul {
+	margin: 0;
+	padding: 0;
 	font-size: 120%;
 	list-style:none;
 	min-height: 500px;
+	width: 500px;
 }
 li {
 	margin:0;
@@ -36,14 +50,68 @@ li {
 h1 {
 
 }
+#twitterFeed {
+	float: right;
+	width: 260px;
+}
+#twitterFeed a {
+	float: left;
+
+}
+#twitterFeed div {
+	margin-bottom: 10px;
+	font-size: 90%;
+}
+#twitterFeed span {
+	padding-left: 60px;
+	display: block;
+}
+#twitterFeed span.date {
+	font-size: 90%;
+	color: #666;
+}
 
 </style>
+<script src="jquery-1.7.1.min.js"></script>
+<script>
+$(function() {
+	var url = "http://twitter.com/status/user_timeline/webtonull.json?count=6&include_rts=1&callback=?";
+	$.getJSON(url, function(data){
+		
+		$.each(data, function(i, item) {
+			var div = $("<div>").appendTo("#twitterFeed").hide();
+			var imgLink = $("<a>").addClass("image").attr("href", "https://www.twitter.com/webtonull").appendTo(div);
+			$("<img>").attr("src", item.user["profile_image_url"]).appendTo(imgLink);
+			$("<span>").addClass("date").text(item.created_at).appendTo(div);
+			$("<span>").text(item.text).appendTo(div);
+			div.slideDown();
+		});
+	});
+});
+</script>
+
+
+</head>
+
+
+
 <body>
 <header>
-<h1>My stuff on Github</h1>
+<h1>Erlend Oftedal's stuff on Github</h1>
 </header>
+<div class="main">
+<div id="twitterFeed">
+	<h2>On twitter</h2>
+</div>
 <ul>
 	<li><a href="/CrossDomainAndBrowserSecurity">Cross domain and browser security</a> - Presentation</a>
 </ul>
+</div>
+
+
+
+
+
+
 </body>
 </html>
